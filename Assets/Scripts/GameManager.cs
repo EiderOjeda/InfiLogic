@@ -5,8 +5,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Puzzle puzzlePrefab;
+    public GameObject inGameMenu;
+    public GameObject winGameMenu;
+    public GameObject startButton;
 
     private List<Puzzle> puzzleList = new List<Puzzle>();
+    private List<Vector3> puzzlePosition = new List<Vector3>();
+    private List<int> randomNumbers = new List<int>();
+    public AudioSource[] PuzzleMusic;
+
 
     private Vector2 startPosition = new Vector2(-3.55f, 1.77f);
 
@@ -25,6 +32,9 @@ public class GameManager : MonoBehaviour
     public static string FolderName;
     public GameObject FullPicture;
 
+    [HideInInspector]
+    public static GameStatus game_status = new GameStatus();
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +42,45 @@ public class GameManager : MonoBehaviour
         SpawnPuzzle(14);
         SetStartPosition();
         ApplyMaterial();
+        ApplyMusic();
+
+        inGameMenu.SetActive(false);
+        winGameMenu.SetActive(false);
+        startButton.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePuzzle();
+        switch (game_status.status)
+        {
+            case GameStatus.GameStat.start_pressed:
+                MixPuzzles();
+                game_status.status = GameStatus.GameStat.play;
+                break;
+            case GameStatus.GameStat.play:
+                if (HasWeWon() == true)
+                {
+                    game_status.status = GameStatus.GameStat.win;
+                }
+                MovePuzzle();
+                break;
+
+            case GameStatus.GameStat.inGameMenu:
+                inGameMenu.SetActive(true);
+                startButton.SetActive(false);
+                break;
+
+            case GameStatus.GameStat.resume:
+                inGameMenu.SetActive(false);
+                game_status.status = GameStatus.GameStat.play;
+                break;
+
+            case GameStatus.GameStat.win:
+                winGameMenu.SetActive(true);
+                break;
+        }
+        
     }
     private void SpawnPuzzle(int number)
     {
@@ -158,5 +201,77 @@ public class GameManager : MonoBehaviour
         Texture2D mat1 = Resources.Load(filePath, typeof(Texture2D)) as Texture2D;
         FullPicture.GetComponent<Renderer>().material.mainTexture = mat1;
 
+    }
+
+    void ApplyMusic()
+    {
+        switch (FolderName)
+        {
+            case "Banana":
+                PuzzleMusic[0].Play();
+                break;
+            case "Durazno":
+                PuzzleMusic[1].Play();
+                break;
+            case "Guanabana":
+                PuzzleMusic[2].Play();
+                break;
+            case "Kiwi":
+                PuzzleMusic[3].Play();
+                break;
+            case "Manzana":
+                PuzzleMusic[4].Play();
+                break;
+            case "Mora":
+                PuzzleMusic[5].Play();
+                break;
+            case "Naranja":
+                PuzzleMusic[6].Play();
+                break;
+            case "Papaya":
+                PuzzleMusic[7].Play();
+                break;
+            case "Piña":
+                PuzzleMusic[8].Play();
+                break;
+            case "Uvas":
+                PuzzleMusic[9].Play();
+                break;
+
+        }
+    }
+
+    void MixPuzzles()
+    {
+        int number;
+
+        foreach(Puzzle p in puzzleList)
+        {
+            puzzlePosition.Add(p.transform.position);
+        }
+
+        foreach (Puzzle p in puzzleList)
+        {
+            number = Random.Range(0, puzzleList.Count);
+
+            while (randomNumbers.Contains(number))
+            {
+                number = Random.Range(0, puzzleList.Count);
+            }
+            randomNumbers.Add(number);
+            p.transform.position = puzzlePosition[number];
+        }
+    }
+
+    bool HasWeWon()
+    {
+        foreach(Puzzle p in puzzleList)
+        {
+            if(p.transform.position != p.winPosition)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

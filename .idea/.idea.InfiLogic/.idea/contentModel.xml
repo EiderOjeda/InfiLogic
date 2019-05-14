@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="Arrow.cs" t="Include" />
+          <e p="BGMusic.cs" t="Include" />
+          <e p="Buttons.cs" t="Include" />
+          <e p="DontDestroyMe.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
+          <e p="GameStatus.cs" t="Include" />
+          <e p="MenuSelect.cs" t="Include" />
+          <e p="Picture.cs" t="Include" />
+          <e p="Puzzle.cs" t="Include" />
+        </e>
+      </e>
+      <e p="InfiLogic.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_InfiLogic.231870440.00" t="ExcludeRecursive" />
+  </component>
+</project>

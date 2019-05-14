@@ -21,10 +21,13 @@ public class Puzzle : MonoBehaviour
     [HideInInspector]
     public bool moved = false;
 
+    [HideInInspector]
+    public Vector3 winPosition;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        winPosition = transform.position;
     }
 
     // Update is called once per frame
